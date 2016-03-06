@@ -69,8 +69,12 @@ public:
     
     float getColor(){return mColor;}
     
+    void randomColor(){mColor = ci::randFloat(0, 1); }
+    
     //Random
     void  randSeed();
+    
+    void  drawMoon(ci::mat4 camViewMatrix);
     
 private:
     ci::vec3	mPos;
@@ -111,6 +115,7 @@ private:
     
     
     ci::gl::BatchRef	mSphereBatch;
+    ci::gl::BatchRef    mMoonBatch;
     
     //Render pass
     int                 mRenderPass;
@@ -134,6 +139,7 @@ private:
     ci::gl::GlslProgRef		mDustShader;
     ci::gl::GlslProgRef		mCoronaShader;
     ci::gl::GlslProgRef		mPlanetShader;
+    ci::gl::GlslProgRef     mTBNShader;
     
     //Textures
     ci::gl::Texture2dRef	mSpectrumTex;
@@ -145,4 +151,7 @@ private:
     ci::gl::Texture2dRef	mBigGlow0Tex;
     ci::gl::Texture2dRef	mBigGlow1Tex;
     ci::gl::Texture2dRef	mVenus;
+    ci::gl::Texture2dRef    mMoonTex;
+    ci::gl::Texture2dRef    mMoonBMTex;
+    
 };

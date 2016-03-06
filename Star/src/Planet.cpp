@@ -128,6 +128,9 @@ void Planet::loadTextures()
     mBigGlow0Tex		= gl::Texture2d::create( loadImage( ci::app::loadAsset( "bigGlow0.png" ) ) );
     mBigGlow1Tex		= gl::Texture2d::create( loadImage( ci::app::loadAsset( "bigGlow1.png" ) ) );
     mVenus              = gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "venus.jpg" ) ), fmt );
+    
+ //   mMoonTex            = gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "moon.jpg" ) ), gl::Texture::Format().mipmap() );
+ //   mMoonBMTex          = gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "normal.jpg" ) ), gl::Texture::Format().mipmap() );
 }
 
 void Planet::loadShaders()
@@ -139,11 +142,27 @@ void Planet::loadShaders()
         mNebulaShader	= gl::GlslProg::create( ci::app::loadAsset( "passThru.vert" ), ci::app::loadAsset( "nebula.frag" ) );
         mCoronaShader	= gl::GlslProg::create( ci::app::loadAsset( "passThru.vert" ), ci::app::loadAsset( "corona.frag" ) );
         mDustShader		= gl::GlslProg::create( ci::app::loadAsset( "passThruColor.vert" ), ci::app::loadAsset( "dust.frag" ) );
+        
+        
+        mTBNShader = gl::GlslProg::create( ci::app::loadAsset( "tbn.vert" ), ci::app::loadAsset( "tbn.frag" ) );
         //mPlanetShader	= gl::GlslProg::create( loadAsset( "passThruNormals.vert" ), loadAsset( "planet.frag" ) );
     } catch( gl::GlslProgCompileExc e ) {
         std::cout << e.what() << std::endl;
         //quit();
     }
+    
+    
+    mMoonTex =  gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "moon.jpg" ) ), gl::Texture::Format().mipmap() );
+    mMoonTex->bind();
+    mMoonBMTex = gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "normal.jpg" ) ), gl::Texture::Format().mipmap() );
+    mMoonBMTex->bind( 1 );
+
+
+    mMoonBatch = gl::Batch::create( geom::Sphere().subdivisions(64) >> geom::Transform( scale( vec3(mRadius*1.6 ) ) ), mTBNShader );/// gl::Batch::create( geom::Sphere().radius(mRadius).subdivisions(64), mTBNShader );
+    gl::ScopedGlslProg glslScp( mTBNShader );
+    mTBNShader->uniform( "uDiffuseMap", 0 );
+    mTBNShader->uniform( "uNormalMap", 1 );
+    mTBNShader->uniform( "uLightLocViewSpace", vec3( 0, 0, 1 ) );
 }
 
 void Planet::createSphere()
@@ -167,7 +186,7 @@ void Planet::createSphere()
     
     //mRadius = 0.1f;
     int sphereResolution = 32;
-    mSphereBatch = gl::Batch::create(geom::Sphere().radius(mRadius).subdivisions(sphereResolution), shader );
+    mSphereBatch = gl::Batch::create(geom::Sphere().radius(mRadius*1.7).subdivisions(sphereResolution), shader );
     
     mLights = 1.0;
 }
@@ -236,20 +255,33 @@ void Planet::drawSphere()
 
 void Planet::drawDust()
 {
-    gl::pushModelView();
     float per = 1.75f * mRadius/mMaxRadius;
     gl::scale( vec3( per, per, per ) );
     
-    
     gl::ScopedGlslProg scpGlsl(mDustShader);
     gl::ScopedTextureBind scpSpectrum(mSpectrumTex, 0);
+    gl::ScopedModelMatrix model;
     
     mDustShader->uniform( "spectrumTex", 0 );
     mDustShader->uniform( "color", mDustColor );
     mDustShader->uniform( "power", mLights );
     mController.drawDusts();
+}
+
+void Planet::drawMoon(ci::mat4 camViewMatrix)
+{
+   gl::color( ColorA( 1, 1, 1, 1 ) );
+   float radius = mRadius;
+   radius *= ( 5.0f + mLights );
     
-    gl::popModelView();
+
+    ci::vec3 mLightPosWorldSpace = vec3( mRadius, mRadius, mRadius );
+    vec3 light = vec3( camViewMatrix * vec4( mLightPosWorldSpace, 1 )) ;
+    //ci::app::console()<<light<<std::endl;
+    mTBNShader->uniform( "uLightLocViewSpace", light);
+    mTBNShader->uniform(  "time", (float)ci::app::getElapsedSeconds() );
+    mMoonBatch->draw();
+    
 }
 
 void Planet::drawCircle()

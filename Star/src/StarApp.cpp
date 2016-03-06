@@ -68,7 +68,7 @@ void StarApp::setup()
 {
     setWindowSize(1280, 720);
     
-    mRenderPass = 7;
+    mRenderPass = 2;
     
     mStar = Planet::create();
     
@@ -93,7 +93,6 @@ void StarApp::setup()
     mParams->addParam("Nebula Color", &mNebulaColor).min(0.0).max(1.0).step(0.01);
     
     mBkgColor = ci::Color(0, 0, 0);
-    
 }
 
 
@@ -109,6 +108,7 @@ void StarApp::setupCamera()
     vec3 cameraUpAxis = vec3(0, 1, 0);
     
     mCamera.setPerspective(verticalFOV, aspectRatio, nearClip, farClip);
+    //mCamera.lookAt( vec3( 3, 2, 4 ), vec3( 0 ) );
     mCamera.lookAt(cameraPosition, cameraTarget, cameraUpAxis);
     mCameraCtrl = CameraUi(&mCamera, getWindow());
 }
@@ -146,25 +146,21 @@ void StarApp::keyDown(KeyEvent event)
         case '7':
             mRenderPass = 7;
             break;
+            
         case 'a':
             mStar->enableLights();
             break;
+            
         case 's':
             mStar->disableLights();
             break;
+            
         case 'r':
              mStar->randSeed();
             break;
+            
         case 't':
-            mStartColor = ci::randFloat(0, 1.0);
-            
-            
-            mCoronaColor = mStartColor;
-            mDustColor = mStartColor;
-            mGlowColor = mStartColor;
-            mCircleColor = mStartColor;
-            mNebulaColor = mStartColor;
-            
+            mStar->randomColor();
             break;
         case 'q':
             mCircleBrightness += 0.01;
@@ -192,7 +188,6 @@ void StarApp::updateStar()
     
     mCamera.getBillboardVectors(&right, &up);
     mStar->setBillboardVectors(right, up);
-
 }
 
 
@@ -212,10 +207,19 @@ void StarApp::drawRenderPass()
             break;
         case 2:
             
-            gl::enable( GL_TEXTURE_2D );
-            gl::disableDepthWrite();
+           // gl::enable( GL_TEXTURE_2D );
+           // gl::disableDepthWrite();
+           // mStar->drawCircle();
+        {
+            gl::enableDepthWrite();
+            gl::enableDepthRead();
+           // gl::disableAlphaBlending();
             
-            mStar->drawCircle();
+            gl::setMatrices( mCamera );
+            gl::ScopedModelMatrix modelScope;
+            
+            mStar->drawMoon(mCamera.getViewMatrix());
+        }
             break;
         case 3:
             gl::enableDepthWrite();
@@ -252,6 +256,10 @@ void StarApp::drawRenderPass()
             break;
             
         case 7:
+        {
+            gl::ScopedMatrices mat;
+            gl::setMatrices(mCamera);
+            
            	gl::disableDepthRead();
             gl::disableDepthWrite();
             
@@ -265,6 +273,13 @@ void StarApp::drawRenderPass()
             float xpos = cos(getElapsedSeconds() * 0.04) * 100;
             float ypos = sin(getElapsedSeconds() * 0.04) * 100;
             gl::drawSphere(ci::vec3(xpos, -30, ypos), 1, 32);
+            
+            {
+                gl::setMatrices( mCamera );
+                gl::ScopedModelMatrix modelScope;
+                
+                mStar->drawMoon(mCamera.getViewMatrix());
+            }
             
             gl::disableDepthWrite();
             
@@ -290,6 +305,7 @@ void StarApp::drawRenderPass()
             gl::disableDepthWrite();
             
             break;
+        }
     }
 }
 
@@ -298,8 +314,8 @@ void StarApp::draw()
 	gl::clear( mBkgColor);
 
     {
-        gl::ScopedMatrices mat;
-        gl::setMatrices(mCamera);
+        //gl::ScopedMatrices mat;
+        //gl::setMatrices(mCamera);
     
         drawRenderPass();
     }
