@@ -6,18 +6,15 @@
 //
 //
 #pragma once
+
 #include "cinder/gl/Gl.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Vbo.h"
 #include "cinder/gl/Batch.h"
-
 #include "cinder/Rand.h"
 
-#include "Star.h"
 #include "Glow.h"
 #include "Nebula.h"
-
-#include <vector>
 
 class Controller {
 public:
@@ -59,21 +56,22 @@ public:
     };
     
     Controller();
+    
     void update( float dt );
     void updateDusts( float dt );
     void drawGlows( ci::gl::GlslProgRef shader, const ci::vec3 &right, const ci::vec3 &up );
     void drawNebulas( ci::gl::GlslProgRef shader, const ci::vec3 &right, const ci::vec3 &up );
     void drawDusts();
     
-    void addGlows( const Star &star, float power, int amt );
-    void addNebulas( const Star &star, int amt );
-    void addDusts( const Star &star, int amt );
+    void addGlows(  ci::vec3 mPos, float mRad, float mRadMulti, float power, int amt );
+    void addNebulas(  ci::vec3 mPos, float mRad, float mRadMulti, int amt );
+    void addDusts( ci::vec3 mPos, ci::vec3 mVel, float mRadius, int amt );
     
     // CANIS MAJORIS
     void addCMNebulas( const ci::vec3 &starPos, float starRadius, float radiusMulti, int amt );
     void addCMGlows( const ci::vec3 &starPos, float starRadius, int amt );
     
-    std::vector<Glow> getGlows(){return mGlows;}
+    std::vector<Glow>   getGlows(){return mGlows;}
     std::vector<Nebula> getNebulas(){return mNebulas;}
     
     std::vector<Glow>	mGlows;

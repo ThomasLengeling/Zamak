@@ -20,7 +20,7 @@
 		7A69EEAB39194FBEB3252D0F /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8DACF13F60094F5598B80398 /* CinderApp.icns */; };
 		7BFA800A378D4844917562C9 /* StarApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F051F5B7808A4E5C8135D3E9 /* StarApp.cpp */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		E23520941C0A333500E1F41B /* Star.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E23520921C0A333500E1F41B /* Star.cpp */; };
+		E23520941C0A333500E1F41B /* PlanetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E23520921C0A333500E1F41B /* PlanetManager.cpp */; };
 		E2701F441C095CA100C74583 /* bigGlow0.png in Resources */ = {isa = PBXBuildFile; fileRef = E2701F251C095CA100C74583 /* bigGlow0.png */; };
 		E2701F451C095CA100C74583 /* bigGlow1.png in Resources */ = {isa = PBXBuildFile; fileRef = E2701F261C095CA100C74583 /* bigGlow1.png */; };
 		E2701F461C095CA100C74583 /* cinder_app_icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = E2701F271C095CA100C74583 /* cinder_app_icon.ico */; };
@@ -51,6 +51,7 @@
 		E2701F651C09708400C74583 /* Glow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2701F631C09708400C74583 /* Glow.cpp */; };
 		E2701F681C09714D00C74583 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2701F661C09714D00C74583 /* Controller.cpp */; };
 		E2701F6B1C0972C500C74583 /* Nebula.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2701F691C0972C500C74583 /* Nebula.cpp */; };
+		E2717B4D1C7B60E300D2260D /* Planet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2717B4B1C7B60E300D2260D /* Planet.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,8 +73,8 @@
 		82ABB0DC896F458294BDF6A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Star.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Star.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DACF13F60094F5598B80398 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
-		E23520921C0A333500E1F41B /* Star.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Star.cpp; path = ../src/Star.cpp; sourceTree = "<group>"; };
-		E23520931C0A333500E1F41B /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = ../src/Star.h; sourceTree = "<group>"; };
+		E23520921C0A333500E1F41B /* PlanetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlanetManager.cpp; path = ../src/PlanetManager.cpp; sourceTree = "<group>"; };
+		E23520931C0A333500E1F41B /* PlanetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlanetManager.h; path = ../src/PlanetManager.h; sourceTree = "<group>"; };
 		E2701F251C095CA100C74583 /* bigGlow0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigGlow0.png; path = ../assets/bigGlow0.png; sourceTree = "<group>"; };
 		E2701F261C095CA100C74583 /* bigGlow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigGlow1.png; path = ../assets/bigGlow1.png; sourceTree = "<group>"; };
 		E2701F271C095CA100C74583 /* cinder_app_icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = cinder_app_icon.ico; path = ../assets/cinder_app_icon.ico; sourceTree = "<group>"; };
@@ -107,6 +108,8 @@
 		E2701F671C09714D00C74583 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = ../src/Controller.h; sourceTree = "<group>"; };
 		E2701F691C0972C500C74583 /* Nebula.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Nebula.cpp; path = ../src/Nebula.cpp; sourceTree = "<group>"; };
 		E2701F6A1C0972C500C74583 /* Nebula.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Nebula.h; path = ../src/Nebula.h; sourceTree = "<group>"; };
+		E2717B4B1C7B60E300D2260D /* Planet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Planet.cpp; path = ../src/Planet.cpp; sourceTree = "<group>"; };
+		E2717B4C1C7B60E300D2260D /* Planet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Planet.h; path = ../src/Planet.h; sourceTree = "<group>"; };
 		F051F5B7808A4E5C8135D3E9 /* StarApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = StarApp.cpp; path = ../src/StarApp.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,8 +152,10 @@
 				E2701F671C09714D00C74583 /* Controller.h */,
 				E2701F691C0972C500C74583 /* Nebula.cpp */,
 				E2701F6A1C0972C500C74583 /* Nebula.h */,
-				E23520921C0A333500E1F41B /* Star.cpp */,
-				E23520931C0A333500E1F41B /* Star.h */,
+				E23520921C0A333500E1F41B /* PlanetManager.cpp */,
+				E23520931C0A333500E1F41B /* PlanetManager.h */,
+				E2717B4B1C7B60E300D2260D /* Planet.cpp */,
+				E2717B4C1C7B60E300D2260D /* Planet.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -350,8 +355,9 @@
 				E2701F651C09708400C74583 /* Glow.cpp in Sources */,
 				E2701F681C09714D00C74583 /* Controller.cpp in Sources */,
 				E2701F6B1C0972C500C74583 /* Nebula.cpp in Sources */,
+				E2717B4D1C7B60E300D2260D /* Planet.cpp in Sources */,
 				7BFA800A378D4844917562C9 /* StarApp.cpp in Sources */,
-				E23520941C0A333500E1F41B /* Star.cpp in Sources */,
+				E23520941C0A333500E1F41B /* PlanetManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +367,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CINDER_PATH = ../../../Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -387,6 +394,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CINDER_PATH = ../../../Cinder;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

@@ -104,35 +104,33 @@ void Controller::drawDusts()
     }
 }
 
-void Controller::addGlows( const Star &star, float power, int amt )
+void Controller::addGlows( ci::vec3 mPos, float mRad, float mRadMulti, float power, int amt )
 {
-    for( int i=0; i<amt; i++ ){
-        float radius	= Rand::randFloat( 15.0f, 20.0f ) * star.mRadiusMulti;
+    for( int i = 0; i < amt; i++ ){
+        float radius	= Rand::randFloat( 15.0f, 20.0f ) * mRadMulti;
         vec3 dir		= Rand::randVec3();
-        vec3 pos		= star.mPos + dir * vec3(( star.mRadius - radius * 0.25 ));
+        vec3 pos		= mPos + dir * vec3(( mRad - radius * 0.25 ));
         vec3 vel		= dir * Rand::randFloat( 1.3f, 2.0f );
         
-        float lifespan	= Rand::randFloat( 15.0f, 30.0f ) * star.mRadiusMulti;
+        float lifespan	= Rand::randFloat( 15.0f, 30.0f ) * mRadMulti;
         
         mGlows.push_back( Glow( pos, vel, radius + ( 1.0f - power ) * 35.0f, lifespan ) );
     }
 }
 
-void Controller::addNebulas( const Star &star, int amt )
+void Controller::addNebulas( ci::vec3 mPos, float mRad, float mRadMulti, int amt )
 {
     for( int i=0; i<amt; i++ ){
-        float radius		= Rand::randFloat( 15.0f, 25.0f ) * star.mRadiusMulti;
+        float radius		= Rand::randFloat( 15.0f, 25.0f ) * mRadMulti;
         vec3 dir			= Rand::randVec3();
-        vec3 pos			= star.mPos + dir * vec3(( star.mRadius - radius * 0.25f ));
-        vec3 vel			= dir * Rand::randFloat( 0.2f, 1.0f ) * star.mRadiusMulti;
-        //		if( Rand::randFloat() < 0.05f ) vel = dir * Rand::randFloat( 1.2f, 1.75f ) * star.mRadiusMulti;
-        //		float radius		= star.mRadius * Rand::randFloat( 2.25f, 3.0f );
-        float lifespan		= Rand::randFloat( 35.0f, 55.0f ) * star.mRadiusMulti;
+        vec3 pos			= mPos + dir * vec3(( mRad - radius * 0.25f ));
+        vec3 vel			= dir * Rand::randFloat( 0.2f, 1.0f ) * mRadMulti;
+        float lifespan		= Rand::randFloat( 35.0f, 55.0f ) * mRadMulti;
         mNebulas.push_back( Nebula( pos, vel, radius, lifespan ) );
     }
 }
 
-void Controller::addDusts( const Star &star, int amt )
+void Controller::addDusts( ci::vec3 mPos, ci::vec3 mVel, float mRadius, int amt )
 {
     int dustsToMake = amt;
     if( mDusts.size() + amt > MAX_DUSTS ){
@@ -140,10 +138,10 @@ void Controller::addDusts( const Star &star, int amt )
     }
     
     if( dustsToMake > 0 ){
-        for( int i=0; i<dustsToMake; i++ ){
+        for( int i=0; i < dustsToMake; i++ ){
             vec3 dir   = Rand::randVec3();
-            vec3 pos	= star.mPos + dir * star.mRadius;
-            vec3 vel	= star.mVel + Rand::randVec3() + dir * Rand::randFloat( 0.85f, 1.5f );
+            vec3 pos	= mPos + dir * mRadius;
+            vec3 vel	= mVel + Rand::randVec3() + dir * Rand::randFloat( 0.85f, 1.5f );
             mDusts.push_back( Dust( pos, vel ) );
         }
     }
