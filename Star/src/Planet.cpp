@@ -152,9 +152,9 @@ void Planet::loadShaders()
     }
     
     
-    mMoonTex =  gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "moon.jpg" ) ), gl::Texture::Format().mipmap() );
+    mMoonTex =  gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "moon.jpg" ) ));//, gl::Texture::Format().mipmap() );
     mMoonTex->bind();
-    mMoonBMTex = gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "normal.jpg" ) ), gl::Texture::Format().mipmap() );
+    mMoonBMTex = gl::Texture2d::create( ci::loadImage( ci::app::loadAsset( "normal.jpg" ) ));//, gl::Texture::Format().mipmap() );
     mMoonBMTex->bind( 1 );
 
 
