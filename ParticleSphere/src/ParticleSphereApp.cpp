@@ -27,6 +27,9 @@ class ParticleSphereApp : public App {
     CameraPersp					mCamera;
     CameraUi					mCameraCtrl;
     void                        setupCamera();
+    
+    params::InterfaceGlRef      mParams;
+    float                       mBkgAlpha;
 
 };
 
@@ -55,6 +58,14 @@ void ParticleSphereApp::setup()
     }
     
     setupCamera();
+    
+    mBkgAlpha = 1.0;
+    
+    mParams = params::InterfaceGl::create( getWindow(), "App parameters", toPixels( ivec2( 200, 300 ) ) );
+    
+    // Setup some basic parameters.
+    mParams->addParam( "alpha", &mBkgAlpha).min(0).max(1).step(0.01);
+
 }
 
 void ParticleSphereApp::setupCamera()
@@ -63,7 +74,7 @@ void ParticleSphereApp::setupCamera()
     float verticalFOV = 65.0f;
     float aspectRatio = getWindowAspectRatio();
     float nearClip = 1.0f;
-    float farClip = 200.0f;
+    float farClip = 100.0f;
     
     vec3 cameraPosition = vec3(0, 0, 5);
     vec3 cameraTarget   = vec3(0, 0, 0);
@@ -86,25 +97,32 @@ void ParticleSphereApp::update()
 
 void ParticleSphereApp::draw()
 {
-	gl::clear( Color( 0, 0, 0 ) );
+    //gl::enableAlphaBlending();
     
+    gl::color(0, 0, 0, mBkgAlpha);
+    gl::drawSolidRect(getWindowBounds());
     
     {
         gl::enableDepthRead();
         gl::enableDepthWrite();
         gl::ScopedMatrices mat;
         gl::setMatrices(mCamera);
-        mParticleManager->draw();
+        
+        //mParticleManager->draw();
         
         //gl::enableWireframe();
         //gl::drawSphere(ci::vec3(0), 1, 16);
         //gl::disableWireframe();
         
     
+        //
         mParticleManager->drawPathBetweenVectors();
         
+        gl::disableDepthRead();
+        gl::disableDepthWrite();
         
     }
+    mParams->draw();
 }
 
 CINDER_APP( ParticleSphereApp, RendererGl( RendererGl::Options().msaa( 32 ) ) )

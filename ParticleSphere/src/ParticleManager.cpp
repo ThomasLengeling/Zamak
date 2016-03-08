@@ -14,10 +14,20 @@ using namespace ci;
 Particle::Particle()
 {
     mTime = 0.0;
+    mTimeInc = ci::randFloat(0.001, 0.003);
+    mDir  = 1.0;
 }
 
 void Particle::update()
 {
+    if(mTime > 1.0){
+        mDir  *= -1;
+    }
+    if(mTime < 0.0){
+        mDir *= -1;
+    }
+    
+    mTime += mTimeInc*mDir;
     
 }
 
@@ -56,7 +66,8 @@ void ParticleManager::drawPathBetweenVectors()
     for(const auto & partFrom : mParticles){
         for(const auto & partTo : mParticles){
             //if( distance(partFrom->getPos(), partTo->getPos()) < 50 ){
-                drawPathSphere(partFrom, partTo);
+               // drawPathSphere(partFrom, partTo);
+                drawTranstionPath(partFrom, partTo);
             //}
         }
     }
@@ -64,7 +75,7 @@ void ParticleManager::drawPathBetweenVectors()
 
 void ParticleManager::drawTranstionPath(Particle * p0, Particle * p1)
 {
-    gl::drawSphere(slerp(p0->getPos(), p1->getPos(), t), );
+    gl::drawSphere(slerp(p0->getPos(), p1->getPos(), p0->getTime()), 0.01 );
 }
 
 void ParticleManager::drawPathSphere(Particle * p0, Particle * p1)

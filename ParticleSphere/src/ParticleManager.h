@@ -11,6 +11,7 @@
 #include "cinder/app/App.h"
 #include "cinder/gl/Batch.h"
 #include "cinder/gl/gl.h"
+#include "cinder/Rand.h"
 
 class Particle{
 public:
@@ -22,12 +23,16 @@ public:
     void setPosition(ci::vec3 pos){mPos = pos;}
     const ci::vec3 & getPos(){return mPos;}
     
+    float getTime(){return mTime;}
+    
 private:
     
     ci::vec3 mPos;
     ci::vec3 mVel;
     
     float    mTime;
+    float    mTimeInc;
+    float    mDir;
     
 };
 
